@@ -197,13 +197,15 @@ let greeter = new Greeter("world");
 	    }
 	}
 
-
 Arrow function 
 	var inc = (x) => x + 1;
 
+Union Type
+	function formatCommandline(command: string[]|string) {
 
+Tuple Type
 
-
+Type Alias
 
 
 Modules
@@ -253,6 +255,15 @@ var use = new Utility.userfull();
 use.apply()
 You need to combine de files
 
+
+export module Example{
+    const customer = {};
+
+    export function myExample(customer: string) {
+        // How to reference the module level customer object here?
+        // Is there a standard to make these module level variables Pascal Case to prevent this overlap?
+    }
+}
 
 
 
