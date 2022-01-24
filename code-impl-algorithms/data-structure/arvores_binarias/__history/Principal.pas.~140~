@@ -1,0 +1,308 @@
+unit Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ImgList;
+
+type
+  TEstado = record
+    Codigo: Integer;
+    Sigla: string;
+    Nome: string;
+  end;
+
+  PApontador = ^TItem;
+  TItem = record
+    Valor: TEstado;
+    NoEsquerda: PApontador;
+    NoDireta: PApontador;
+  end;
+
+  TForm2 = class(TForm)
+    EdtNomeEstado: TEdit;
+    Label1: TLabel;
+    EdtSiglaEstado: TEdit;
+    Label2: TLabel;
+    BitBtn1: TBitBtn;
+    GroupBox1: TGroupBox;
+    LstPreOrdem: TListBox;
+    Percorrer: TBitBtn;
+    EdtCodigo: TEdit;
+    Label3: TLabel;
+    GroupBox2: TGroupBox;
+    LstPosOrdem: TListBox;
+    BitBtn2: TBitBtn;
+    GroupBox3: TGroupBox;
+    LstEmOrdem: TListBox;
+    BitBtn3: TBitBtn;
+    SpeedButton1: TSpeedButton;
+    ImageList1: TImageList;
+    BitBtn4: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure PercorrerClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+  private
+    procedure Inserir( AEstado: TEstado; var AItem: PApontador );
+
+    procedure PreOrdem( AItem: PApontador );
+    procedure PosOrdem( AItem: PApontador );
+    procedure EmOrdem( AItem: PApontador );
+
+    procedure Buscar( AItem: PApontador );
+
+    procedure Deletar(aux: PApontador; var tree: PApontador);
+    procedure Excluir(var tree: PApontador; item: TEstado);
+
+    procedure Imprimir( AEstado: TEstado; AListBox: TListBox );
+
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+  Raiz: PApontador = nil;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.BitBtn1Click(Sender: TObject);
+var
+  Estados: array of TEstado;
+  Estado: TEstado;
+  Indice: Integer;
+begin
+{  SetLength( Estados, 9 );
+
+  Estados[0].Codigo:= 8;
+  Estados[0].Sigla:= 'SC';
+  Estados[0].Nome:= '';
+
+  Estados[1].Codigo:= 3;
+  Estados[1].Sigla:= '';
+  Estados[1].Nome:= '';
+
+  Estados[2].Codigo:= 10;
+  Estados[2].Sigla:= '';
+  Estados[2].Nome:= '';
+
+  Estados[3].Codigo:= 1;
+  Estados[3].Sigla:= '';
+  Estados[3].Nome:= '';
+
+  Estados[4].Codigo:= 6;
+  Estados[4].Sigla:= '';
+  Estados[4].Nome:= '';
+
+  Estados[5].Codigo:= 14;
+  Estados[5].Sigla:= '';
+  Estados[5].Nome:= '';
+
+  Estados[6].Codigo:= 4;
+  Estados[6].Sigla:= '';
+  Estados[6].Nome:= '';
+
+  Estados[7].Codigo:= 7;
+  Estados[7].Sigla:= '';
+  Estados[7].Nome:= '';
+
+  Estados[8].Codigo:= 13;
+  Estados[8].Sigla:= '';
+  Estados[8].Nome:= '';
+  }
+
+  Estado.Codigo:= StrToInt( EdtCodigo.Text );
+  Estado.Sigla:= EdtSiglaEstado.Text;
+  Estado.Nome:= EdtNomeEstado.Text;
+
+  {
+  for Indice := Low(Estados) to High(Estados) do
+    Inserir( Estados[Indice], Raiz );
+  }
+end;
+
+procedure TForm2.BitBtn2Click(Sender: TObject);
+begin
+  PosOrdem( Raiz );
+end;
+
+procedure TForm2.BitBtn3Click(Sender: TObject);
+begin
+  EmOrdem( Raiz );
+end;
+
+procedure TForm2.BitBtn4Click(Sender: TObject);
+var
+  Estado: TEstado;
+begin
+  Estado.Codigo:= StrToInt( EdtCodigo.Text );
+
+  Excluir( Raiz, Estado );
+end;
+
+procedure TForm2.Deletar(aux: PApontador; var tree: PApontador);
+begin
+   if tree^.NoDireta <> nil
+   then
+   begin
+      Deletar(aux,tree^.NoDireta);
+   end
+   else
+   begin
+      aux^.Valor:= tree^.Valor;
+      aux:= tree;
+      tree:= tree^.NoEsquerda;
+      dispose(aux);
+   end;
+end;
+
+procedure TForm2.Excluir(var tree: PApontador; item: TEstado);
+var aux : PApontador;
+
+begin
+  if (item.Codigo < tree^.Valor.Codigo) then
+  begin
+     excluir(tree^.NoEsquerda, item);
+  end
+  else
+  if (item.Codigo > tree^.Valor.Codigo) then
+  begin
+     excluir(tree^.NoDireta,item);
+  end
+  else
+  if tree^.NoDireta = nil then
+  begin
+     aux := tree;
+     tree := tree^.NoEsquerda;
+     dispose(aux);
+  end
+  else
+  if tree^.NoEsquerda = nil then
+  begin
+     aux := tree;
+     tree := tree^.NoDireta;
+     dispose(aux);
+  end
+  else
+  begin
+     Deletar(tree, tree^.NoEsquerda);
+  end;
+end;
+
+
+
+procedure TForm2.Buscar(AItem: PApontador);
+var
+  CodigoPesquisa: Integer;
+begin
+  CodigoPesquisa:= StrToInt( EdtCodigo.Text );
+
+  // Verifica se a lista esta vazia
+  if ( AItem <> nil ) then
+  begin
+    // Encontrou o registro
+    if ( AItem.Valor.Codigo = StrToInt( EdtCodigo.Text ) ) then
+    begin
+      EdtSiglaEstado.Text:= AItem.Valor.Sigla;
+      EdtNomeEstado.Text:= AItem.Valor.Nome;
+    end else
+    begin
+
+      if ( CodigoPesquisa < AItem.Valor.Codigo ) then
+        Buscar( AItem.NoEsquerda )
+      else if ( CodigoPesquisa > AItem.Valor.Codigo ) then
+        Buscar( AItem.NoDireta )
+    end;
+  end;
+end;
+
+procedure TForm2.EmOrdem(AItem: PApontador);
+begin
+
+  if ( AItem <> nil ) then
+  begin
+    EmOrdem( AItem.NoEsquerda );
+
+    // Esse nó é o raiz da subarvore
+    Imprimir( AItem.Valor, LstEmOrdem );
+
+    EmOrdem( AItem.NoDireta );
+  end;
+
+end;
+
+
+procedure TForm2.Imprimir(AEstado: TEstado; AListBox: TListBox);
+begin
+  AListBox.Items.Add(
+    IntToStr( AEstado.Codigo ) + ' - ' + AEstado.Nome );
+end;
+
+procedure TForm2.Inserir( AEstado: TEstado; var AItem: PApontador );
+begin
+
+  if ( AItem = nil ) then
+  begin
+    // Aloca um novo item na memória
+    New( AItem );
+    AItem.Valor:= AEstado;
+    AItem.NoEsquerda:= nil;
+    AItem.NoDireta:= nil;
+  end else
+  begin
+    // A o campo para ordenação é o nome
+    if ( AEstado.Codigo < AItem.Valor.Codigo ) then
+      Inserir(AEstado, AItem.NoEsquerda)
+    else if ( AEstado.Codigo > AItem.Valor.Codigo ) then
+      Inserir(AEstado, AItem.NoDireta)
+    else
+      raise Exception.Create('Não é permitido item duplicado');
+  end;
+
+end;
+
+procedure TForm2.PercorrerClick(Sender: TObject);
+begin
+  LstPreOrdem.Clear;
+  PreOrdem( Raiz );
+end;
+
+procedure TForm2.PosOrdem(AItem: PApontador);
+begin
+  if ( AItem <> nil ) then
+  begin
+    // Percorre os nós da esquerda
+    PosOrdem( AItem.NoEsquerda );
+    // Percorre os nós da direita
+    PosOrdem( AItem.NoDireta );
+    // Esse nó é o raiz da subarvore
+    Imprimir( AItem.Valor, LstPosOrdem );
+  end;
+end;
+
+procedure TForm2.PreOrdem(AItem: PApontador);
+begin
+
+  if ( AItem <> nil ) then
+  begin
+    // Esse nó é o raiz da subarvore
+    Imprimir( AItem.Valor, LstPreOrdem );
+
+    PreOrdem( AItem.NoEsquerda );
+    PreOrdem( AItem.NoDireta );
+  end;
+
+end;
+
+procedure TForm2.SpeedButton1Click(Sender: TObject);
+begin
+  Buscar( Raiz )
+end;
+
+end.
