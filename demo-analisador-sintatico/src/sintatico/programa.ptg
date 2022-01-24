@@ -1,0 +1,9 @@
+inicio
+
+para 1 ate 10 faca 
+   valor <- valor * 10.2 
+
+se verdadeiro faca 
+  exibir 
+  
+fim
