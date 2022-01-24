@@ -1,0 +1,15 @@
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/MoshCourseUdemy.deps.json
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/MoshCourseUdemy.runtimeconfig.json
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/MoshCourseUdemy.runtimeconfig.dev.json
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/MoshCourseUdemy.dll
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/ref/MoshCourseUdemy.dll
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/bin/Debug/net5.0/MoshCourseUdemy.pdb
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.csproj.AssemblyReference.cache
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.GeneratedMSBuildEditorConfig.editorconfig
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.AssemblyInfoInputs.cache
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.AssemblyInfo.cs
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.csproj.CoreCompileInputs.cache
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.dll
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/ref/MoshCourseUdemy.dll
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.pdb
+/Users/johnidouglas/Projects/MoshCourseUdemy/MoshCourseUdemy/obj/Debug/net5.0/MoshCourseUdemy.genruntimeconfig.cache

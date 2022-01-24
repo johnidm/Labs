@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "MoshCourseUdemy/1.0.0": {
+        "runtime": {
+          "MoshCourseUdemy.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MoshCourseUdemy/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
