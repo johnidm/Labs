@@ -1,31 +1,27 @@
 namespace UnderstandIQueriabel;
 
-public class Intimacao
+public class TaskItem
 {
-    public int IntimacaoId { get; set; }
-    public string TipoAtoComunicacao { get; set; }
-    public string CodigoObjeto { get; set; }
-    public string TipoMovimentoProcesso { get; set; }
-
-    public int? PeticionamentoId { get; set; }
-    public Peticionamento Peticionamento { get; set; }
+    public int TaskItemId { get; set; }
+    public string Title { get; set; }
+    
+    public int? ReminderId { get; set; }
+    public Reminder Reminder { get; set; }
 }
 
-public class Peticionamento
+public class Reminder
 {
-    public int PeticionamentoId { get; set; }
-    public string Usuario { get; set; }
+    public int ReminderId { get; set; }
 
-    public Intimacao Intimacao { get; set; }
-
-    public int TipoPeticionamentoId { get; set; }
-
-    public TipoPeticionamento TipoPeticionamento { get; set; }
+    public DateTime Date { get; set; }
+    
+    public int ReminderTypeId { get; set; }
+    public ReminderType ReminderType { get; set; }
 
 }
 
-public class TipoPeticionamento 
+public class ReminderType 
 {
-    public int TipoPeticionamentoId { get; set; }
-    public string Descricao { get; set; }
+    public int ReminderTypeId { get; set; }
+    public string Label { get; set; }
 }

@@ -4,10 +4,9 @@ namespace UnderstandIQueriabel;
 
 class AppDbContext : DbContext
 {
-    public DbSet<Intimacao> Intimacoes { get; set; }
-    public DbSet<Peticionamento> Peticionamentos { get; set; }
-
-    public DbSet<TipoPeticionamento> TiposPeticionamento { get; set; }
+    public DbSet<TaskItem> TaskItens { get; set; }
+    public DbSet<Reminder> Reminders { get; set; }
+    public DbSet<ReminderType> ReminderTypes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

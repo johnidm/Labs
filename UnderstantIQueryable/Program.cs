@@ -7,48 +7,44 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Starting");
-
         using (var context = new AppDbContext())
         {
+            
+            var email = new ReminderType { Label = "email" };
+            var whatsapp = new ReminderType { Label = "WhatsApp" };
 
-            var tp1 = new TipoPeticionamento { Descricao = "Alegações Finais" };
+            var tasks = new List<TaskItem> {
+                new TaskItem {
+                    Title = "Schedule English Lesson",
+                    Reminder = new Reminder { Date = DateTime.Now.AddHours(4), ReminderType = email },
+                },
 
-            var intimacoes = new List<Intimacao> {
-                new Intimacao {
-                    CodigoObjeto = "2R000000005LP",
-                    TipoAtoComunicacao = "Manifestação",
-                    TipoMovimentoProcesso = "Ato ordinatório",
-                    Peticionamento = new Peticionamento { Usuario = "ROBO", TipoPeticionamento = tp1 } },
+                new TaskItem {
+                    Title = "Go to the Supermarket",
+                    Reminder = new Reminder { Date = DateTime.Now.AddDays(2), ReminderType = whatsapp },
+                },
 
-                new Intimacao {
-                    CodigoObjeto = "2R000000004OF",
-                    TipoAtoComunicacao = "Intimação",
-                    TipoMovimentoProcesso = "Mero expediente",
-                    Peticionamento = new Peticionamento { Usuario = "MT67584", TipoPeticionamento = tp1 }},
-
-                new Intimacao {
-                    CodigoObjeto = "2R000000004S6",
-                    TipoAtoComunicacao = "Intimação do MP",
-                    TipoMovimentoProcesso = "Intimação",
-                    },
+                new TaskItem {
+                    Title = "Meeting with Develoiper Team"
+                },
             };
 
-            context.AddRange(intimacoes);
+            context.AddRange(tasks);
             context.SaveChanges();
         }
 
         using (var context = new AppDbContext())
         {
+            
             // SELECT *
-            // FROM intimacoes i1
-            // LEFT JOIN peticionamento p1 ON (i1.id = p1.id)
-            // LEFT JOIN peticionamento p2 ON (p1.id = p2.id)
-            var resultado = context.Intimacoes.Include(p => p.Peticionamento).Include(p => p.Peticionamento.TipoPeticionamento).ToList();
+            // FROM TaskItem t1
+            // LEFT JOIN Reminder r1 ON (t1.id = r1.id)
+            // LEFT JOIN ReminderType r2 ON (r1.id = r2.id)
+            var resultado = context.TaskItens.Include(p => p.Reminder).ThenInclude(p => p.ReminderType).ToList();
 
             foreach (var p in resultado)
             {
-                Console.WriteLine($"{p.CodigoObjeto} - {p.TipoAtoComunicacao} - {p.TipoMovimentoProcesso} - {p.Peticionamento?.Usuario} - {p.Peticionamento?.TipoPeticionamento?.Descricao}");
+                Console.WriteLine($"{p.Title} - {p.Reminder?.Date} - {p.Reminder?.ReminderType?.Label}");
 
             }
         }
