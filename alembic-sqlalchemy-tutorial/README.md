@@ -26,3 +26,9 @@ Create the second migration and apply the migrations
 alembic revision --autogenerate -m "Active collumn"
 alembic upgrade heads
 ```
+
+```
+alembic history
+alembic history -i
+alembic upgrade +1 --sql
+```
