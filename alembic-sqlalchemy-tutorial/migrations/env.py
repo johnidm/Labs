@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 
 from alembic import context
 
@@ -67,6 +67,9 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
+
+        if connectable.name == 'sqlite':
+            connection.execute(text("ATTACH DATABASE 'models.db' AS prod01sa"))
 
         with context.begin_transaction():
             context.run_migrations()

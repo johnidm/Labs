@@ -1,9 +1,5 @@
 ## SQLAlchemy migration with Alembic
 
-Install the dependencies
-```
-pip install alembic sqlalchemy
-```
 
 Initialize the migrations engine
 

@@ -9,6 +9,7 @@ Base = declarative_base()
 
 class UserModel(Base):
     __tablename__ = 'user'
+    __table_args__ = dict(schema="prod01sa")
 
     id = Column(Integer, primary_key=True)
     first_name = Column(String, nullable=False)
@@ -26,3 +27,11 @@ class UserModel(Base):
             f"created_at={self.created_at} "
             f"is_active={self.is_active} "
         )
+
+
+class TaskModel(Base):
+    __tablename__ = 'task'
+    __table_args__ = dict(schema="prod01sa")
+
+    id = Column(Integer, primary_key=True)
+    description = Column(String, nullable=False)
